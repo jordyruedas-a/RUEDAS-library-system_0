@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block contenido %}
+    <h1>Editar Libro</h1>
+    <div class="formulario">
+        <form method="POST">
+            <input type="text" name="titulo" value="{{ libro.titulo }}" required>
+            <input type="text" name="autor" value="{{ libro.autor }}" required>
+            <input type="text" name="isbn" value="{{ libro.isbn }}" required>
+            <input type="text" name="editorial" value="{{ libro.editorial }}" required>
+  <input type="text" 
+       name="anio" 
+       placeholder="Año (4 dígitos)"
+       pattern="\d{4}"
+       title="Ingrese un año válido de 4 dígitos"
+       required>
+            <input type="number" name="cantidad" value="{{ libro.cantidad }}" min="0" required>
+            <input type="number" step="0.01" name="precio" value="{{ libro.precio }}" required>
+            <button type="submit">Actualizar</button>
+        </form>
+    </div>
+    
+    <a href="/libros">Volver a Libros</a>
+{% endblock %}

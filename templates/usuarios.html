@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block contenido %}
+    <h1>Gestión de Usuarios</h1>
+    
+    <div class="formulario">
+        <h2>Agregar Usuario</h2>
+        <form method="POST">
+            <input type="text" name="nombre" placeholder="Nombre" required>
+            <input type="text" name="apellido" placeholder="Apellido" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="text" name="telefono" placeholder="Teléfono" pattern="\d{10}" title="10 dígitos" required>
+            <button type="submit">Guardar</button>
+        </form>
+    </div>
+    
+    <h2>Listado de Usuarios</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Email</th>
+                <th>Teléfono</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for usuario in usuarios %}
+            <tr>
+                <td>{{ usuario._id }}</td>
+                <td>{{ usuario.nombre }}</td>
+                <td>{{ usuario.apellido }}</td>
+                <td>{{ usuario.email }}</td>
+                <td>{{ usuario.telefono }}</td>
+                <td>
+                    <a href="/editar_usuario/{{ usuario._id }}" class="editar">Editar</a>
+                    <a href="/eliminar_usuario/{{ usuario._id }}" onclick="return confirmarEliminacion()" class="eliminar">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

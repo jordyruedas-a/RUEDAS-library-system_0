@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block contenido %}
+    <h1>Editar Usuario</h1>
+    
+    <div class="formulario">
+        <form method="POST">
+            <input type="text" name="nombre" value="{{ usuario.nombre }}" required>
+            <input type="text" name="apellido" value="{{ usuario.apellido }}" required>
+            <input type="email" name="email" value="{{ usuario.email }}" required>
+            <input type="text" name="telefono" value="{{ usuario.telefono }}" pattern="\d{10}" title="10 dígitos" required>
+            <button type="submit">Actualizar</button>
+        </form>
+    </div>
+    
+    <a href="/usuarios">Volver a Usuarios</a>
+{% endblock %}

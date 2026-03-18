@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block contenido %}
+    <h1>Registro de Ventas</h1>
+    
+    <div class="formulario-venta">
+        <form method="POST" id="formVenta">
+            <div class="grupo-usuario">
+                <label>Usuario:</label>
+                <select name="usuario" required>
+                    <option value="">Seleccionar Usuario</option>
+                    {% for usuario in usuarios %}
+                    <option value="{{ usuario._id }}">{{ usuario.nombre }} {{ usuario.apellido }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div id="libros-container">
+                <div class="grupo-libro">
+                    <label>Libro:</label>
+                    <select name="libro" class="select-libro" required>
+                        <option value="">Seleccionar Libro</option>
+                        {% for libro in libros %}
+                        <option value="{{ libro._id }}" data-precio="{{ libro.precio }}" data-stock="{{ libro.cantidad }}">
+                            {{ libro.titulo }} (Stock: {{ libro.cantidad }})
+                        </option>
+                        {% endfor %}
+                    </select>
+                    <label>Cantidad:</label>
+                    <input type="number" name="cantidad" min="1" value="1" required>
+                    <button type="button" class="eliminar-libro" onclick="eliminarLibro(this)">×</button>
+                </div>
+            </div>
+            
+            <button type="button" onclick="agregarLibro()">Agregar Libro</button>
+            
+            <div class="total">
+                <h3>Total: $<span id="total">0.00</span></h3>
+            </div>
+            
+            <button type="submit">Registrar Venta</button>
+        </form>
+    </div>
+    
+    <h2>Historial de Ventas</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID Venta</th>
+                <th>Usuario</th>
+                <th>Libros</th>
+                <th>Fecha</th>
+                <th>Total</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for venta in ventas %}
+            <tr>
+                <td>{{ venta._id }}</td>
+                <td>{{ venta.usuario.nombre }} {{ venta.usuario.apellido }}</td>
+                <td>
+                    {% for libro in venta.libros_info %}
+                        {{ libro.titulo }} ({{ venta.libros[loop.index0].cantidad }})<br>
+                    {% endfor %}
+                </td>
+                <td>{{ venta.fecha.strftime('%d/%m/%Y %H:%M') }}</td>
+                <td>${{ venta.total }}</td>
+                <td>
+                    <a href="/eliminar_venta/{{ venta._id }}" onclick="return confirmarEliminacion()" class="eliminar">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
